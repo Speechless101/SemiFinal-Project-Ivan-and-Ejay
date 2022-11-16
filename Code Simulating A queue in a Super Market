@@ -1,0 +1,130 @@
+#include<iostream>
+
+using namespace std;
+
+int main(){	
+
+	//input
+	int costumers;
+	int cItems[100],pack[100]; 
+	double total,total_lQt, a=0,b=0,c=0;
+	string pref_packaging[100],pref_pMethod[100];
+	
+	//computation
+	double tDt = 0.5, tSt = 0.5, tPt = 0.5, tRPt =0.3;
+	double total_tDt, total_tSt, total_tPt, total_tRPt;
+	int box = 10, bag =5 , digital = 15, cash_e = 15, cas_ne = 20;
+	int d = 15, c_e = 15, c_ne = 20;
+	int idle =0;
+
+	cin>>costumers;
+	
+	for(int i=1; i<=costumers; i++){	
+		cin>>cItems[i],
+		cin>>pref_packaging[i],
+		cin>>pack[i],
+		getline(cin,pref_pMethod[i]);
+	}
+	
+	cout<<"\nNo.of Costumer: "<<costumers<<endl;
+	cout<<"======================"<<endl;
+	
+	for (int i= 1; i <=costumers; i++){	
+		cout<<"\nCostumer #"<<i<<endl;	
+		cout<<"No. of Cart Items: "<<cItems[i]<<endl;
+		cout<<"Preferred Packaging: ";
+		pref_packaging[i];
+		
+			if(pref_packaging[i] == "box"){	
+				cout<<"box"<<endl;
+				cout<<"Number of boxes: "<<pack[i]<<endl;
+			}
+			else if(pref_packaging[i] == "bag"){
+				cout<<"bag"<<endl;
+				cout<<"Number of bags: "<<pack[i]<<endl;
+			}
+
+		cout<<"Preferred Payment Method: ";
+		pref_pMethod[i];
+			if(pref_pMethod[i] == " digital"){		
+				cout<<"digital"<<endl;
+			}
+			else if(pref_pMethod[i] == " cash e"){
+				cout<<"cash (exact)"<<endl;
+			}
+			else if(pref_pMethod[i] == " cash ne"){
+				cout<<"cash (not exact)"<<endl;
+			}
+		
+	
+		cout<<"-------------------------------------------------------"<<endl;
+		cout<<"Total De-Carting Time: ";
+		total_tDt = cItems[i]*tDt;
+		cout<<total_tDt<<endl;
+		cout<<"Total Scanning Time: ";
+		total_tSt = cItems[i]*tDt;
+		cout<<total_tSt<<endl;
+	
+			if(pref_packaging[i]=="box"){
+				cout<<"Total Packing Time: ";
+				total_tPt= (cItems[i]*tPt)+(pack[i]*box);
+				cout<<total_tPt<<endl;	
+			}
+			else if(pref_packaging[i]=="bag"){
+				cout<<"Total Packing Time: \n";
+				total_tPt= (cItems[i]*tPt)+(pack[i]*bag);
+				cout<<total_tPt<<endl;
+			}	
+			
+		cout<<"Total Paying Time: \n";
+			if(pref_pMethod[i]==" digital"){
+				cout<<d<<endl;
+			}
+			else if(pref_pMethod[i]==" cash e"){
+				cout<<c_e<<endl;
+			}
+			else if(pref_pMethod[i]==" cash ne"){
+				cout<<c_ne<<endl;
+			}
+			
+		cout<<"Total Receipt Printing Time: ";
+		total_tRPt = (cItems[i]*tRPt) + 2;
+		cout<<total_tRPt<<endl;
+		cout<<"Idle Time: ";
+			if(i==1){
+				cout<<idle<<endl;
+			}
+			else{
+				idle =+3;
+				cout<<idle<<endl;
+			}	
+		
+		cout<<"Total Costumer-Queue Time: ";
+		
+			if(pref_pMethod[i]==" digital"){
+				total=(total_tDt+ total_tSt+total_tPt+ total_tRPt)+(+ idle + d);
+				cout<<total<<endl;
+				a+=total;
+			}
+			else if(pref_pMethod[i]==" cash e"){
+				total=(total_tDt+ total_tSt+total_tPt+ total_tRPt)+(+ idle + c_e);
+				cout<<total<<endl;
+				b+=total;		
+			}
+			else if(pref_pMethod[i]==" cash ne"){
+				total=(total_tDt+ total_tSt+total_tPt+ total_tRPt)+(idle + c_ne);
+				cout<<total<<endl;
+				c+=total;		
+			}
+			
+		cout<<"++++++++++++++++++++++"<<endl;
+	}
+	
+	total_lQt = a+b+c;
+	cout<<"Total Lane Queue Time: "<<total_lQt<<endl;	
+	
+	system("pause");
+	return 0;
+}
+
+
